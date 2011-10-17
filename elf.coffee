@@ -97,10 +97,6 @@ readElf = (data) ->
     section_strings_index: bufTo16 data.slice(50, 52)
   tokeniseOpcodes (nameSections (fillInSections (fillInIdent ans), data))
 
-# TODO:
-# Pull the component objects into that hash.
-# 1.  Program headers, say.
-
 defineElf = () ->
   fch = process.argv[process.argv.length - 1]
   fs.open fch, 'r', (err, fd) ->
