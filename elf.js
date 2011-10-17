@@ -140,5 +140,6 @@
       }
     });
   };
-  defineElf();
+  exports.defineElf = defineElf;
+  exports.readElf = readElf;
 }).call(this);

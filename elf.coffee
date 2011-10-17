@@ -113,4 +113,5 @@ defineElf = () ->
             console.log util.inspect readElf buf
           fs.close fd
 
-defineElf()
+exports.defineElf = defineElf
+exports.readElf = readElf
