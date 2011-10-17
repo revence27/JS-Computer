@@ -16,4 +16,4 @@ Features
 --------
 *(In other words, what has been cleared off TODO)*
 
-1.  ELF parser. See elf(5) manpage.
+1.  ELF parser (also as library). See elf(5) manpage.
