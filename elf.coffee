@@ -1,18 +1,18 @@
-fs   = require 'fs'
-util = require 'util'
-
 bufTo16 = (buf) ->
-  rez = buf[0]
-  rez << 8
-  rez |= buf[1]
+  rez = buf[1]
+  rez = rez << 8
+  rez |= buf[0]
   rez
 
 bufTo32 = (buf) ->
-  fst1 = bufTo16 buf.slice(0, 2)
-  snd1 = bufTo16 buf.slice(2, 4)
-  fst1 << 16
-  fst1 |= snd1
-  fst1
+  rez = buf[3]
+  rez = rez << 8
+  rez |= buf[2]
+  rez = rez << 8
+  rez |= buf[1]
+  rez = rez << 8
+  rez |= buf[0]
+  rez
 
 getAsciiz = (buf, pos) ->
   ans = ''
@@ -25,6 +25,7 @@ tokeniseOpcodes = (elf) ->
   tsec = elf['.text'].section
   elf['.text'].section = for bt in [0 ... tsec.length] by 2
     bufTo16 new Buffer [tsec[bt], tsec[bt + 1] or 0]
+    # bufTo16 new Buffer [tsec[bt + 1] or 0, tsec[bt]]
   elf
 
 fillInIdent = (elf) ->
@@ -95,23 +96,7 @@ readElf = (data) ->
     section_header_size: bufTo16 data.slice(46, 48)
     section_header_count: bufTo16 data.slice(48, 50)
     section_strings_index: bufTo16 data.slice(50, 52)
+  # fillInSections (fillInIdent ans), data
   tokeniseOpcodes (nameSections (fillInSections (fillInIdent ans), data))
 
-defineElf = () ->
-  fch = process.argv[process.argv.length - 1]
-  fs.open fch, 'r', (err, fd) ->
-    if err
-      console.error err
-    else
-      d = new Buffer 18
-      fs.fstat fd, (err, stats) ->
-        d = new Buffer stats.size
-        fs.read fd, d, 0, stats.size, null, (err, num, buf) ->
-          if err
-            console.error err
-          else
-            console.log util.inspect readElf buf
-          fs.close fd
-
-exports.defineElf = defineElf
 exports.readElf = readElf

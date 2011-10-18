@@ -2,9 +2,12 @@
 .byte 0x1B
 .byte 33
 .text
-nop
+reti
 beginning:
   nop
+insanity:
+  nop
+  rjmp insanity
   nop
   rjmp beginning
   nop

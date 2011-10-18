@@ -1,21 +1,22 @@
 (function() {
-  var bufTo16, bufTo32, defineElf, fillInIdent, fillInSections, fs, getAsciiz, nameSections, readElf, tokeniseOpcodes, util;
-  fs = require('fs');
-  util = require('util');
+  var bufTo16, bufTo32, fillInIdent, fillInSections, getAsciiz, nameSections, readElf, tokeniseOpcodes;
   bufTo16 = function(buf) {
     var rez;
-    rez = buf[0];
-    rez << 8;
-    rez |= buf[1];
+    rez = buf[1];
+    rez = rez << 8;
+    rez |= buf[0];
     return rez;
   };
   bufTo32 = function(buf) {
-    var fst1, snd1;
-    fst1 = bufTo16(buf.slice(0, 2));
-    snd1 = bufTo16(buf.slice(2, 4));
-    fst1 << 16;
-    fst1 |= snd1;
-    return fst1;
+    var rez;
+    rez = buf[3];
+    rez = rez << 8;
+    rez |= buf[2];
+    rez = rez << 8;
+    rez |= buf[1];
+    rez = rez << 8;
+    rez |= buf[0];
+    return rez;
   };
   getAsciiz = function(buf, pos) {
     var ans, c, _ref;
@@ -117,29 +118,5 @@
     };
     return tokeniseOpcodes(nameSections(fillInSections(fillInIdent(ans), data)));
   };
-  defineElf = function() {
-    var fch;
-    fch = process.argv[process.argv.length - 1];
-    return fs.open(fch, 'r', function(err, fd) {
-      var d;
-      if (err) {
-        return console.error(err);
-      } else {
-        d = new Buffer(18);
-        return fs.fstat(fd, function(err, stats) {
-          d = new Buffer(stats.size);
-          return fs.read(fd, d, 0, stats.size, null, function(err, num, buf) {
-            if (err) {
-              console.error(err);
-            } else {
-              console.log(util.inspect(readElf(buf)));
-            }
-            return fs.close(fd);
-          });
-        });
-      }
-    });
-  };
-  exports.defineElf = defineElf;
   exports.readElf = readElf;
 }).call(this);

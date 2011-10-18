@@ -1,8 +1,9 @@
 elf = require '../elf'
+avr = require '../prettyavr'
 fs   = require 'fs'
 util = require 'util'
 
-defineElf = () ->
+decompileAVR = () ->
   fch = process.argv[process.argv.length - 1]
   fs.open fch, 'r', (err, fd) ->
     if err
@@ -15,7 +16,7 @@ defineElf = () ->
           if err
             console.error err
           else
-            console.log util.inspect elf.readElf buf
+            console.log avr.name_opcodes (((elf.readElf buf)['.text']).section)
           fs.close fd
 
-defineElf()
+decompileAVR()
