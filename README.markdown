@@ -10,6 +10,9 @@ Footnotes
 ---------
 
 [TRS-80 emulator] (http://people.cs.ubc.ca/~pphillip/trs80.html) by Peter Phillips.
+
 Antonio Villena’s projects, [jTandy](http://jtandy.antoniovillena.es/), [jBacteria](http://jbacteria.antoniovillena.es/), and [Roland](http://roland.antoniovillena.es/).
+
 [JSSpeccy](http://jsspeccy.zxdemo.org/) by Matt Wescott.
+
 [Qaop](http://wizard.ae.krakow.pl/~jb/qaop/js/) by Jan Bobrowski.
