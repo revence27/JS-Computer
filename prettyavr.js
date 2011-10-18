@@ -40,7 +40,7 @@
     }
   };
   name_opcode = function(opc, max, table) {
-    var ans, uc, width;
+    var ans, uc, w, wds, width, _i, _len;
     ans = null;
     if (max == null) {
       max = 16;
@@ -48,7 +48,16 @@
     if (table == null) {
       table = opcode_tree;
     }
-    for (width in table) {
+    wds = ((function() {
+      var _results;
+      _results = [];
+      for (w in table) {
+        _results.push(w);
+      }
+      return _results;
+    })()).sort();
+    for (_i = 0, _len = wds.length; _i < _len; _i++) {
+      width = wds[_i];
       uc = opc >> (max - width);
       ans = table[width][uc];
       if (ans) {

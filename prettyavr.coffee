@@ -30,7 +30,9 @@ name_opcode = (opc, max, table) ->
   ans   =  null
   max   ?= 16
   table ?= opcode_tree
-  for width of table
+  # for width of table
+  wds = (w for w of table).sort()
+  for width in wds
     uc = opc >> (max - width)
     ans = table[width][uc]
     return clean_answer ans, opc if ans
