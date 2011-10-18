@@ -1,6 +1,15 @@
 A Computer, in JavaScript
 =========================
-Think of it as a little brother to Fabrice Bellard’s [Javascript PC Emulator](http://bellard.org/jslinux/) but it runs on AVR, rather than Intel x86. It is more-closely related to the [TRS-80 emulator] (http://people.cs.ubc.ca/~pphillip/trs80.html) of Peter Phillips.
+Think of it as a little brother to Fabrice Bellard’s [Javascript PC Emulator](http://bellard.org/jslinux/) but it runs on AVR, rather than Intel x86, and it is a new machine, rather than an emulation of a pre-existing machine. There are many other inspirational projects in this vein, to which this one is more-closely related (see footnotes). 
 
 The code is written in [CoffeeScript](http://jashkenas.github.com/coffee-script/); but since it is running on `--watch`, it results in up-to-date JavaScript as well.
 It is being tested on [Node.js](http://nodejs.org/) in development; how would the heavily-used `Buffer` class work on a browser?
+
+
+Footnotes
+---------
+
+[TRS-80 emulator] (http://people.cs.ubc.ca/~pphillip/trs80.html) by Peter Phillips.
+Antonio Villena’s projects, [jTandy](http://jtandy.antoniovillena.es/), [jBacteria](http://jbacteria.antoniovillena.es/), and [Roland](http://roland.antoniovillena.es/).
+[JSSpeccy](http://jsspeccy.zxdemo.org/) by Matt Wescott.
+[Qaop](http://wizard.ae.krakow.pl/~jb/qaop/js/) by Jan Bobrowski.
