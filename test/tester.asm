@@ -12,3 +12,13 @@ insanity:
   rjmp beginning
   nop
   sleep
+  clh
+  clc
+  cli
+  cln
+  clr r18
+  cls
+  clt
+  clv
+  clz
+  com r1

@@ -1,13 +1,26 @@
 opcode_tree =
   16:
-    0:    'nop'
-    157:  'sleep'
+    0:      'nop'
+    38280:  'sleep'
+    38168:  'reti'
+    38024:  'clc'
+    38104:  'clh'
+    38136:  'cli'
+    38056:  'cln'
+    38088:  'cls'
+    38120:  'clt'
+    38072:  'clv'
+    38040:  'clz'
+  7:
+    74:     (opc) -> "com #{opc & 0x01f0}"
+  6:
+    9:      (opc) -> "clr #{opc & 0x03ff}"
   4:
-    3: 'rjmp'
+    12: (opc) -> "rjmp #{opc & 0x0fff}"
 
 clean_answer = (ans, opc) ->
   if typeof(ans) == typeof(clean_answer)
-    clean_answer ans opc
+    clean_answer (ans opc), opc
   else if typeof(ans) == typeof([])
     clean_answer ans[0] opc
   else
@@ -15,18 +28,13 @@ clean_answer = (ans, opc) ->
 
 name_opcode = (opc, max, table) ->
   ans   =  null
-  mask  = 0xffff
   max   ?= 16
   table ?= opcode_tree
   for width of table
-    df = max - width
-    ans = table[width][opc & (mask >> df)]
-    if ans
-      if typeof(ans) == typeof(table)
-        ans = name_opcode (opc & (mask >> df)), df, ans
-      else
-        ans = clean_answer ans, opc
-  ans
+    uc = opc >> (max - width)
+    ans = table[width][uc]
+    return clean_answer ans, opc if ans
+  "UNKNOWN(#{opc})"
 
 name_opcodes = (opcs, max, table) ->
   max ?= 16

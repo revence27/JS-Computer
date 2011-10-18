@@ -3,15 +3,36 @@
   opcode_tree = {
     16: {
       0: 'nop',
-      157: 'sleep'
+      38280: 'sleep',
+      38168: 'reti',
+      38024: 'clc',
+      38104: 'clh',
+      38136: 'cli',
+      38056: 'cln',
+      38088: 'cls',
+      38120: 'clt',
+      38072: 'clv',
+      38040: 'clz'
+    },
+    7: {
+      74: function(opc) {
+        return "com " + (opc & 0x01f0);
+      }
+    },
+    6: {
+      9: function(opc) {
+        return "clr " + (opc & 0x03ff);
+      }
     },
     4: {
-      3: 'rjmp'
+      12: function(opc) {
+        return "rjmp " + (opc & 0x0fff);
+      }
     }
   };
   clean_answer = function(ans, opc) {
     if (typeof ans === typeof clean_answer) {
-      return clean_answer(ans(opc));
+      return clean_answer(ans(opc), opc);
     } else if (typeof ans === typeof []) {
       return clean_answer(ans[0](opc));
     } else {
@@ -19,9 +40,8 @@
     }
   };
   name_opcode = function(opc, max, table) {
-    var ans, df, mask, width;
+    var ans, uc, width;
     ans = null;
-    mask = 0xffff;
     if (max == null) {
       max = 16;
     }
@@ -29,17 +49,13 @@
       table = opcode_tree;
     }
     for (width in table) {
-      df = max - width;
-      ans = table[width][opc & (mask >> df)];
+      uc = opc >> (max - width);
+      ans = table[width][uc];
       if (ans) {
-        if (typeof ans === typeof table) {
-          ans = name_opcode(opc & (mask >> df), df, ans);
-        } else {
-          ans = clean_answer(ans, opc);
-        }
+        return clean_answer(ans, opc);
       }
     }
-    return ans;
+    return "UNKNOWN(" + opc + ")";
   };
   name_opcodes = function(opcs, max, table) {
     var opc, _i, _len, _results;
