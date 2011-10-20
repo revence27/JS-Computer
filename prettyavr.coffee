@@ -16,7 +16,7 @@ opcode_tree =
   6:
     9:      (opc) -> "clr #{opc & 0x03ff}"
   4:
-    12: (opc) -> "rjmp #{opc & 0x0fff}"
+    12:     (opc) -> "rjmp #{opc & 0x0fff}"
 
 clean_answer = (ans, opc) ->
   if typeof(ans) == typeof(clean_answer)

@@ -1,5 +1,6 @@
 (function() {
   var clean_answer, name_opcode, name_opcodes, opcode_tree;
+
   opcode_tree = {
     16: {
       0: 'nop',
@@ -30,6 +31,7 @@
       }
     }
   };
+
   clean_answer = function(ans, opc) {
     if (typeof ans === typeof clean_answer) {
       return clean_answer(ans(opc), opc);
@@ -39,15 +41,12 @@
       return ans;
     }
   };
+
   name_opcode = function(opc, max, table) {
     var ans, uc, w, wds, width, _i, _len;
     ans = null;
-    if (max == null) {
-      max = 16;
-    }
-    if (table == null) {
-      table = opcode_tree;
-    }
+    if (max == null) max = 16;
+    if (table == null) table = opcode_tree;
     wds = ((function() {
       var _results;
       _results = [];
@@ -60,17 +59,14 @@
       width = wds[_i];
       uc = opc >> (max - width);
       ans = table[width][uc];
-      if (ans) {
-        return clean_answer(ans, opc);
-      }
+      if (ans) return clean_answer(ans, opc);
     }
     return "UNKNOWN(" + opc + ")";
   };
+
   name_opcodes = function(opcs, max, table) {
     var opc, _i, _len, _results;
-    if (max == null) {
-      max = 16;
-    }
+    if (max == null) max = 16;
     _results = [];
     for (_i = 0, _len = opcs.length; _i < _len; _i++) {
       opc = opcs[_i];
@@ -78,7 +74,11 @@
     }
     return _results;
   };
+
   exports.opcode_tree = opcode_tree;
+
   exports.name_opcode = name_opcode;
+
   exports.name_opcodes = name_opcodes;
+
 }).call(this);

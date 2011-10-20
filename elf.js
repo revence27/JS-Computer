@@ -1,5 +1,6 @@
 (function() {
   var bufTo16, bufTo32, fillInIdent, fillInSections, getAsciiz, nameSections, readElf, tokeniseOpcodes;
+
   bufTo16 = function(buf) {
     var rez;
     rez = buf[1];
@@ -7,6 +8,7 @@
     rez |= buf[0];
     return rez;
   };
+
   bufTo32 = function(buf) {
     var rez;
     rez = buf[3];
@@ -18,17 +20,17 @@
     rez |= buf[0];
     return rez;
   };
+
   getAsciiz = function(buf, pos) {
     var ans, c, _ref;
     ans = '';
     for (c = pos, _ref = buf.length; pos <= _ref ? c <= _ref : c >= _ref; pos <= _ref ? c++ : c--) {
-      if (buf[c] === 0) {
-        break;
-      }
+      if (buf[c] === 0) break;
       ans = ans + String.fromCharCode(buf[c]);
     }
     return ans;
   };
+
   tokeniseOpcodes = function(elf) {
     var bt, tsec;
     tsec = elf['.text'].section;
@@ -42,6 +44,7 @@
     })();
     return elf;
   };
+
   fillInIdent = function(elf) {
     var idobj;
     idobj = {
@@ -52,6 +55,7 @@
     elf.ident = idobj;
     return elf;
   };
+
   nameSections = function(elf) {
     var s, sec;
     sec = elf.section_headers[elf.section_strings_index].section;
@@ -69,6 +73,7 @@
     })();
     return elf;
   };
+
   fillInSections = function(elf, data) {
     var ans, pnt, rez, sec, secs, start;
     start = elf.section_header_offset;
@@ -98,6 +103,7 @@
     elf.section_headers = secs;
     return elf;
   };
+
   readElf = function(data) {
     var ans;
     ans = {
@@ -118,5 +124,7 @@
     };
     return tokeniseOpcodes(nameSections(fillInSections(fillInIdent(ans), data)));
   };
+
   exports.readElf = readElf;
+
 }).call(this);
