@@ -1,4 +1,4 @@
-as = require '../assassin'
+elf = require '../elf'
 avr = require '../prettyavr'
 fs   = require 'fs'
 util = require 'util'
@@ -16,9 +16,7 @@ decompileAVR = () ->
           if err
             console.error err
           else
-            rez = avr.name_opcodes as.assemble buf.toString 'utf-8'
-            # console.log rez
-            console.log rez.join("\n")
+            console.log avr.name_opcodes (((elf.readElf buf)['.text']).section)
           fs.close fd
 
 decompileAVR()
