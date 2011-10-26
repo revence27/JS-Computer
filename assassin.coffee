@@ -1,3 +1,5 @@
+util = require 'util'
+
 opcode_tree =
   'nop':    [[], 0]
   'sleep':  [[], 38280]

@@ -1,5 +1,7 @@
 (function() {
-  var assemble, convert, opcode_tree, typeTest, type_test;
+  var assemble, convert, opcode_tree, typeTest, type_test, util;
+
+  util = require('util');
 
   opcode_tree = {
     'nop': [[], 0],
