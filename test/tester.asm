@@ -1,3 +1,5 @@
+.org 0000
+rjmp beginning
 .data
 .byte 0x1B
 .byte 33
@@ -7,9 +9,7 @@ beginning:
   nop
 insanity:
   nop
-  rjmp insanity
   nop
-  rjmp beginning
   nop
   sleep
   clh
@@ -19,6 +19,7 @@ insanity:
   clr r18
   cls
   clt
+  rjmp insanity
   clv
   clz
   com r1
