@@ -31,17 +31,21 @@
     return ans;
   };
 
-  tokeniseOpcodes = function(elf) {
-    var bt, tsec;
-    tsec = elf['.text'].section;
-    elf['.text'].section = (function() {
-      var _ref, _results;
-      _results = [];
-      for (bt = 0, _ref = tsec.length; bt < _ref; bt += 2) {
-        _results.push(bufTo16(new Buffer([tsec[bt], tsec[bt + 1] || 0])));
-      }
-      return _results;
-    })();
+  tokeniseOpcodes = function(elf, sections) {
+    var bt, sec, tsec, _i, _len;
+    if (sections == null) sections = ['.text', '.rela.text'];
+    for (_i = 0, _len = sections.length; _i < _len; _i++) {
+      sec = sections[_i];
+      tsec = elf[sec].section;
+      elf[sec].section = (function() {
+        var _ref, _results;
+        _results = [];
+        for (bt = 0, _ref = tsec.length; bt < _ref; bt += 2) {
+          _results.push(bufTo16(new Buffer([tsec[bt], tsec[bt + 1] || 0])));
+        }
+        return _results;
+      })();
+    }
     return elf;
   };
 

@@ -21,11 +21,11 @@ getAsciiz = (buf, pos) ->
     ans = ans + String.fromCharCode(buf[c])
   ans
 
-tokeniseOpcodes = (elf) ->
-  tsec = elf['.text'].section
-  elf['.text'].section = for bt in [0 ... tsec.length] by 2
-    bufTo16 new Buffer [tsec[bt], tsec[bt + 1] or 0]
-    # bufTo16 new Buffer [tsec[bt + 1] or 0, tsec[bt]]
+tokeniseOpcodes = (elf, sections = ['.text', '.rela.text']) ->
+  for sec in sections
+    tsec = elf[sec].section
+    elf[sec].section = for bt in [0 ... tsec.length] by 2
+      bufTo16 new Buffer [tsec[bt], tsec[bt + 1] or 0]
   elf
 
 fillInIdent = (elf) ->
